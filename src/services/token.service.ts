@@ -58,11 +58,11 @@ export class TokenService {
 
     if (!user) return null;
 
-    return {
+    return new User({
       user_id: user.user_id,
       name: user.name,
       email: user.email,
       password: user.password,
-    };
+    });
   }
 }

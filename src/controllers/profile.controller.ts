@@ -9,7 +9,7 @@ export class ProfileController {
   async index(@Req() req: FastifyGuardRequest) {
     return {
       message: "Successfully fetched user's profile",
-      data: req.user,
+      data: req.user.serialize(),
     };
   }
 }

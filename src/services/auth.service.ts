@@ -13,7 +13,7 @@ export class AuthService {
     private readonly tokenService: TokenService,
   ) {}
 
-  async register(dto: Omit<User, 'user_id'>) {
+  async register(dto: Pick<User, 'name' | 'email' | 'password'>) {
     const db = this.databaseService.open();
 
     await this.databaseService.run(
@@ -35,7 +35,8 @@ export class AuthService {
   async login(dto: Pick<User, 'email' | 'password'>) {
     const db = this.databaseService.open();
 
-    const user: User = await this.profileService.findByEmail(dto.email, db);
+    const user = await this.profileService.findByEmail(dto.email, db);
+    user.serialize();
 
     if (!user || !Hash.compare(dto.password, user.password)) {
       db.close();

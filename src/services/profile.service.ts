@@ -36,6 +36,6 @@ export class ProfileService {
     );
 
     !conn && db.close();
-    return user;
+    return new User(user);
   }
 }
