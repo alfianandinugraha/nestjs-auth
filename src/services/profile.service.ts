@@ -5,7 +5,9 @@ import { Database } from 'sqlite3';
 
 @Injectable()
 export class ProfileService {
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(
+    private readonly databaseService: DatabaseService = new DatabaseService(),
+  ) {}
 
   async get(userId: number, conn?: Database) {
     const db = conn ?? this.databaseService.open();
