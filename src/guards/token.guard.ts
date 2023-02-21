@@ -20,6 +20,8 @@ export class TokenGuard implements CanActivate {
     if (!token) throw new UnauthorizedException();
 
     const user = await this.tokenService.findUser(token);
+    if (!user) throw new UnauthorizedException();
+
     request.user = user;
     request.token = token;
 

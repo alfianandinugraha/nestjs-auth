@@ -56,6 +56,8 @@ export class TokenService {
     );
     db.close();
 
+    if (!user) return null;
+
     return {
       user_id: user.user_id,
       name: user.name,
