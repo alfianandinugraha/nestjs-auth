@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { join } from 'node:path';
 import { Database } from 'sqlite3';
 
 @Injectable()
 export class DatabaseService {
+  private readonly logger = new Logger(DatabaseService.name);
   private path = join(__dirname, '..', '..', 'db', 'db.sqlite');
 
   /**
@@ -11,7 +12,9 @@ export class DatabaseService {
    * Open a connection to the database
    */
   open() {
-    return new Database(this.path);
+    return new Database(this.path).on('open', () => {
+      this.logger.log('Database connected');
+    });
   }
 
   async get<T>(sql: string, conn: Database, param?: any) {
