@@ -4,6 +4,7 @@ import { Database } from 'sqlite3';
 import Token from '@app/models/token';
 import { Hash } from '@app/utils/hash';
 import * as crypto from 'crypto';
+import User from '@app/models/user';
 
 @Injectable()
 export class TokenService {
@@ -42,5 +43,24 @@ export class TokenService {
 
   generate() {
     return Hash.make(crypto.randomBytes(10).toString('hex'));
+  }
+
+  async findUser(token: string, conn?: Database) {
+    const db = conn ?? this.databaseService.open();
+    const user: User & Token = await this.databaseService.get(
+      'SELECT * FROM tokens INNER JOIN users ON tokens.user_id = users.user_id  WHERE token = $token;',
+      db,
+      {
+        $token: token,
+      },
+    );
+    db.close();
+
+    return {
+      user_id: user.user_id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+    };
   }
 }
