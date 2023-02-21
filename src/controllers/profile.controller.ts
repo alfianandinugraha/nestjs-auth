@@ -1,18 +1,17 @@
-import { Controller, Get, Put } from '@nestjs/common';
+import { ProfileService } from '@app/services/profile.service';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller('/profile')
 export class ProfileController {
-  @Get('/')
-  index() {
-    return {
-      message: 'Hello World!',
-    };
-  }
+  constructor(private readonly profileService: ProfileService) {}
 
-  @Put('/')
-  update() {
+  @Get('/')
+  async index() {
+    const profile = await this.profileService.get(1);
+
     return {
-      message: 'Hello World!',
+      message: "Successfully fetched user's profile",
+      data: profile,
     };
   }
 }
