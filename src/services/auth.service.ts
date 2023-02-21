@@ -54,4 +54,20 @@ export class AuthService {
     db.close();
     return token;
   }
+
+  async logout(token: string) {
+    const db = this.databaseService.open();
+
+    await this.databaseService.run(
+      'DELETE FROM tokens WHERE token = $token',
+      db,
+      {
+        $token: token,
+      },
+    );
+
+    db.close();
+
+    return true;
+  }
 }

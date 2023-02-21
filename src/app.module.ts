@@ -7,10 +7,16 @@ import { DatabaseService } from '@app/services/database.service';
 import { AuthService } from '@app/services/auth.service';
 import { RegisterController } from '@app/controllers/register/register.controller';
 import { TokenService } from './services/token.service';
+import { LogoutController } from './controllers/logout.controller';
 
 @Module({
   imports: [],
-  controllers: [LoginController, ProfileController, RegisterController],
+  controllers: [
+    LoginController,
+    ProfileController,
+    RegisterController,
+    LogoutController,
+  ],
   providers: [
     AppService,
     ProfileService,
