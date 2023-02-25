@@ -1,8 +1,8 @@
 {
-  "name": "nest-jwt",
+  "name": "nestjs-auth",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Example of Nestjs Authorization with Redis and SQLite",
+  "author": "Alfian Andi Nugraha",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
