@@ -1,3 +1,5 @@
+import User from '@app/models/user';
+import { CacheService } from '@app/services/cache.service';
 import { TokenService } from '@app/services/token.service';
 import {
   CanActivate,
@@ -9,7 +11,10 @@ import { FastifyGuardRequest } from 'fastify';
 
 @Injectable()
 export class TokenGuard implements CanActivate {
-  constructor(private readonly tokenService: TokenService) {}
+  constructor(
+    private readonly tokenService: TokenService,
+    private readonly cacheService: CacheService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const http = context.switchToHttp();
@@ -19,10 +24,15 @@ export class TokenGuard implements CanActivate {
 
     if (!token) throw new UnauthorizedException();
 
-    const user = await this.tokenService.findUser(token);
+    const user: User | null = await this.cacheService.fetch(
+      [`AccessToken`, token],
+      async () => await this.tokenService.findUser(token),
+      10,
+    );
+
     if (!user) throw new UnauthorizedException();
 
-    request.user = user;
+    request.user = new User(user);
     request.token = token;
 
     return true;

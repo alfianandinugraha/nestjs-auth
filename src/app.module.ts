@@ -8,6 +8,7 @@ import { AuthService } from '@app/services/auth.service';
 import { RegisterController } from '@app/controllers/register/register.controller';
 import { TokenService } from './services/token.service';
 import { LogoutController } from './controllers/logout.controller';
+import { CacheService } from './services/cache.service';
 
 @Module({
   imports: [],
@@ -23,6 +24,7 @@ import { LogoutController } from './controllers/logout.controller';
     DatabaseService,
     AuthService,
     TokenService,
+    CacheService,
   ],
 })
 export class AppModule {}
