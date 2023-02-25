@@ -6,7 +6,7 @@ class User extends BaseModel {
   email: string;
   password: string;
 
-  protected guard = ['password'];
+  protected $guard = ['password'];
 
   constructor({
     user_id,

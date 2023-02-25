@@ -1,5 +1,6 @@
 import { TokenGuard } from '@app/guards/token.guard';
 import { AuthService } from '@app/services/auth.service';
+import { HttpSuccess } from '@app/utils/http-success';
 import { Controller, Delete, UseGuards, Req } from '@nestjs/common';
 import { FastifyGuardRequest } from 'fastify';
 
@@ -11,9 +12,6 @@ export class LogoutController {
   @Delete('/')
   async remove(@Req() req: FastifyGuardRequest) {
     await this.authService.logout(req.token);
-
-    return {
-      message: 'Hello World!',
-    };
+    return new HttpSuccess('Success logout', null);
   }
 }

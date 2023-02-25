@@ -3,6 +3,7 @@ import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { ZodValidationPipe } from '@app/pipes/zod.pipe';
 import { RegisterUserDTO } from './dto/register-user.dto';
 import { Hash } from '@app/utils/hash';
+import { HttpSuccess } from '@app/utils/http-success';
 
 @Controller('/register')
 export class RegisterController {
@@ -17,9 +18,6 @@ export class RegisterController {
       password: Hash.make(dto.password),
     });
 
-    return {
-      message: 'User created successfully',
-      statusCode: 201,
-    };
+    return HttpSuccess.created('Success register');
   }
 }
