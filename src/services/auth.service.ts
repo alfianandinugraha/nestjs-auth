@@ -36,7 +36,6 @@ export class AuthService {
     const db = this.databaseService.open();
 
     const user = await this.profileService.findByEmail(dto.email, db);
-    user.serialize();
 
     if (!user || !Hash.compare(dto.password, user.password)) {
       db.close();
